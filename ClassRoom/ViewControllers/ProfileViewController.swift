@@ -522,17 +522,4 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 }
 
-class Message : NSObject {
-    var FromId : String!
-    var ToId : String!
-    var Message : String!
-    var Timestamp : Int!
-    
-    func chatPartnerId() -> String? {
-        if FromId == FIRAuth.auth()?.currentUser?.uid {
-            return ToId
-        } else {
-            return FromId
-        }
-    }
-}
+

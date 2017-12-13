@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B4B96A5729CB1774CA1FDA9 /* Pods_ClassRoom.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D218E7A8D2F3A14420EA6E /* Pods_ClassRoom.framework */; };
+		FE0642431FDF1B4E00EE5D6E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0642421FDF1B4E00EE5D6E /* Models.swift */; };
 		FE1853761F61F5A900E3F7A6 /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1853751F61F5A800E3F7A6 /* ImagesViewController.swift */; };
 		FE1853781F61F5BB00E3F7A6 /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1853771F61F5BB00E3F7A6 /* VideosViewController.swift */; };
 		FE18537A1F61F5C900E3F7A6 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1853791F61F5C900E3F7A6 /* NotesViewController.swift */; };
@@ -72,6 +73,7 @@
 		05ACC6B5B4BF8A4C7B52B26F /* Pods-ClassRoom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoom.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClassRoom/Pods-ClassRoom.debug.xcconfig"; sourceTree = "<group>"; };
 		23D218E7A8D2F3A14420EA6E /* Pods_ClassRoom.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClassRoom.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67A3E81061EE3D7CDC14F22E /* Pods-ClassRoom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoom.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClassRoom/Pods-ClassRoom.release.xcconfig"; sourceTree = "<group>"; };
+		FE0642421FDF1B4E00EE5D6E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		FE1853751F61F5A800E3F7A6 /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		FE1853771F61F5BB00E3F7A6 /* VideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
 		FE1853791F61F5C900E3F7A6 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				FEDB76EB1F679DB400FDDED9 /* PRViewController.swift */,
 				FE37E8B61F67AA4600F76A3B /* PRAViewController.swift */,
 				FEFC81CC1FB3551D00000B50 /* UploadBookViewController.swift */,
+				FE0642421FDF1B4E00EE5D6E /* Models.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				FEFE5B9E1F626BCC00B9F743 /* ImageExtendedViewController.swift in Sources */,
 				FE1853781F61F5BB00E3F7A6 /* VideosViewController.swift in Sources */,
 				FE2B2D361F64DD8900ED477A /* MessageToViewController.swift in Sources */,
+				FE0642431FDF1B4E00EE5D6E /* Models.swift in Sources */,
 				FEF4A7CD1F593CFF00610E00 /* MembersTableViewCell.swift in Sources */,
 				FE18537E1F61F6A600E3F7A6 /* RootPageViewController.swift in Sources */,
 				FE40254B1F451B3500AB4648 /* LogInViewController.swift in Sources */,

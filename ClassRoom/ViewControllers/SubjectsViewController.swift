@@ -297,19 +297,3 @@ class SubjectsViewController: UIViewController, UITableViewDataSource, UITableVi
 
                                                     //Data Models
 
-class Subject: NSObject {
-    var SubId : String!
-    var Name: String!
-    var Description: String!
-    var University : University!
-    var Year : Int!
-    var Groups : [Group] = []
-}
-
-class Group: NSObject {
-    var GrId : String!
-    var GroupName : String!
-    var Members : [User] = []
-    var Teacher : String!
-    var Topics : [Topic] = []
-}

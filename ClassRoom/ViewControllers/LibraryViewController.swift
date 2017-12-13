@@ -380,44 +380,4 @@ class LibraryViewController: UIViewController, UICollectionViewDelegate, UIColle
     
 }
 
-class Book : NSObject {
-    var BookId : String!
-    var URL : String!
-    var Category : String!
-    var Cover : String!
-    var Date : String!
-    var Description : String!
-    var Idiom : String!
-    var Name : String!
-    var PagesCount : Int!
-    var Writer : String!
-    
-    
-    override init() {}
-    
-    required init(BookId : String,URL : String ,Category : String, Cover:String, Date:String,Description : String, Idiom:String,Name:String,PagesCount : Int,Writer:String) {
-       self.BookId = BookId
-        self.URL = URL
-        self.Category = Category
-        self.Cover = Cover
-        self.Date = Date
-        self.Description = Description
-        self.Idiom = Idiom
-        self.Name = Name
-        self.PagesCount = PagesCount
-        self.Writer = Writer
-    }
-    
-    
-    
-}
 
-extension UIImage {
-    convenience init(view: UIView) {
-        UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.render(in:UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        self.init(cgImage: image!.cgImage!)
-    }
-}
