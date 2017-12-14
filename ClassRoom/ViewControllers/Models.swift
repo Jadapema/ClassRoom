@@ -11,6 +11,7 @@ import UIKit
 import AVFoundation
 import FirebaseAuth
 
+// will be a struct ********
 class Book : NSObject {
     var BookId : String!
     var URL : String!
@@ -57,7 +58,7 @@ class Message : NSObject {
     }
 }
 
-
+// will be a struct ********
 class Subject: NSObject {
     var SubId : String!
     var Name: String!
@@ -67,6 +68,7 @@ class Subject: NSObject {
     var Groups : [Group] = []
 }
 
+// will be a struct ********
 class Group: NSObject {
     var GrId : String!
     var GroupName : String!
@@ -75,6 +77,7 @@ class Group: NSObject {
     var Topics : [Topic] = []
 }
 
+// will be a struct ********
 class User: NSObject, NSCoding {
     var Name : String!
     var Email : String!
@@ -111,35 +114,8 @@ class User: NSObject, NSCoding {
     }
 }
 
-let imageCache = NSCache<NSString, AnyObject>()
-extension UIImageView {
-    func loadImageUsingCacheWithUrlString(_ urlString: String) {
-        self.image = nil
-        //check cache for image first
-        if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
-            self.image = cachedImage
-            return
-        }
-        //otherwise fire off a new download
-        let url = URL(string: urlString)
-        URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
-            //download hit an error so lets return out
-            if let error = error {
-                print(error)
-                return
-            }
-            DispatchQueue.main.async(execute: {
-                if let downloadedImage = UIImage(data: data!) {
-                    imageCache.setObject(downloadedImage, forKey: urlString as NSString)
-                    self.image = downloadedImage
-                }
-            })
-        }).resume()
-    }
-}
 
-
-
+// will be a struct ********
 class University : NSObject {
     var Uid : String!
     var Name : String!
@@ -156,12 +132,16 @@ class University : NSObject {
     }
 }
 
+
+// will be a struct ********
 class Pregunta : NSObject {
     var QuestionID : String!
     var QuestionName : String!
     var Respuestas : [String] = []
 }
 
+
+// will be a struct ********
 class Topic : NSObject, NSCoding {
     // Topic Variables
     var Topic : String!
@@ -241,6 +221,38 @@ class ArchiveUtiliesMembers {
         UserDefaults.standard.synchronize()
     }
 }
+
+
+
+let imageCache = NSCache<NSString, AnyObject>()
+extension UIImageView {
+    func loadImageUsingCacheWithUrlString(_ urlString: String) {
+        self.image = nil
+        //check cache for image first
+        if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
+            self.image = cachedImage
+            return
+        }
+        //otherwise fire off a new download
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+            //download hit an error so lets return out
+            if let error = error {
+                print(error)
+                return
+            }
+            DispatchQueue.main.async(execute: {
+                if let downloadedImage = UIImage(data: data!) {
+                    imageCache.setObject(downloadedImage, forKey: urlString as NSString)
+                    self.image = downloadedImage
+                }
+            })
+        }).resume()
+    }
+}
+
+
+
 extension InscriptionViewController: AVCaptureFileOutputRecordingDelegate {
     func capture(_ captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!) {
         guard let data = NSData(contentsOf: outputFileURL as URL) else {
@@ -453,6 +465,177 @@ extension UIImage {
         UIGraphicsEndImageContext()
         self.init(cgImage: image!.cgImage!)
     }
+}
+
+extension RecordViewController: AVCaptureFileOutputRecordingDelegate
+{
+    func capture(_ output: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!) {
+        print(outputFileURL)
+        let filemainurl = outputFileURL
+        
+        do
+        {
+            //            let asset = AVURLAsset(URL: filemainurl!, options: nil)
+            let asset = AVURLAsset(url: filemainurl!, options: nil)
+            print(asset)
+            let imgGenerator = AVAssetImageGenerator(asset: asset)
+            imgGenerator.appliesPreferredTrackTransform = true
+            let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+            //            let uiImage = UIImage(CGImage: cgImage)
+            let uiImage = UIImage(cgImage: cgImage)
+            //            userreponsethumbimageData = NSData(contentsOfURL: filemainurl!)!
+            do {
+                userreponsethumbimageData = try NSData(contentsOf: filemainurl!)
+                print(userreponsethumbimageData.length)
+                print(uiImage)
+                VideoImage = uiImage
+            } catch {
+                print(error)
+            }
+            // imageData = UIImageJPEGRepresentation(uiImage, 0.1)
+        }
+        catch let error as NSError
+        {
+            print(error)
+            return
+        }
+        
+        // SVProgressHUD.showWithMaskType(SVProgressHUDMaskType.Clear)
+        
+        
+        //        let VideoFilePath = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("mergeVideo\(arc4random()%1000)d")!.URLByAppendingPathExtension("mp4")!.absoluteString
+        let VideoFilePath = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("mergeVideo\(arc4random()%1000)d")!.appendingPathExtension("mp4").absoluteString
+        
+        if FileManager.default.fileExists(atPath: VideoFilePath)
+            
+        {
+            do
+                
+            {
+                try FileManager.default.removeItem(atPath: VideoFilePath)
+            }
+            catch { }
+            
+        }
+        let tempfilemainurl =  NSURL(string: VideoFilePath)!
+        let sourceAsset = AVURLAsset(url: filemainurl!, options: nil)
+        let assetExport: AVAssetExportSession = AVAssetExportSession(asset: sourceAsset, presetName: AVAssetExportPresetMediumQuality)!
+        assetExport.outputFileType = AVFileTypeQuickTimeMovie
+        assetExport.outputURL = tempfilemainurl as URL
+        assetExport.exportAsynchronously { () -> Void in
+            switch assetExport.status
+            {
+            case AVAssetExportSessionStatus.completed:
+                DispatchQueue.main.async(execute: {
+                    do
+                    {
+                        //SVProgressHUD.dismiss()
+                        self.userreponsevideoData = try NSData(contentsOf: tempfilemainurl as URL, options: NSData.ReadingOptions())
+                        print("MB - \(self.userreponsevideoData.length) byte")
+                        self.performSegue(withIdentifier: "ShowPreviewVideo", sender: nil)
+                        
+                    }
+                    catch
+                    {
+                        // SVProgressHUD.dismiss()
+                        print(error)
+                    }
+                })
+            case  AVAssetExportSessionStatus.failed:
+                print("failed \(String(describing: assetExport.error))")
+            case AVAssetExportSessionStatus.cancelled:
+                print("cancelled \(String(describing: assetExport.error))")
+            default:
+                print("complete")
+                // SVProgressHUD .dismiss()
+            }
+            
+        }
+    }
+    
+    //    func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: URL!, fromConnections connections: [AnyObject]!) {
+    //        print(fileURL)
+    //    }
+    func capture(_ output: AVCaptureFileOutput!, didStartRecordingToOutputFileAt fileURL: URL!, fromConnections connections: [Any]!) {
+        print("Lo que busco : \(fileURL)")
+        VideoUrl = fileURL
+        
+    }
+    
+    //    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+    //        print(outputFileURL)
+    //        let filemainurl = outputFileURL
+    //
+    //        do
+    //        {
+    //            let asset = AVURLAsset(URL: filemainurl, options: nil)
+    //            print(asset)
+    //            let imgGenerator = AVAssetImageGenerator(asset: asset)
+    //            imgGenerator.appliesPreferredTrackTransform = true
+    //            let cgImage = try imgGenerator.copyCGImageAtTime(CMTimeMake(0, 1), actualTime: nil)
+    //            let uiImage = UIImage(CGImage: cgImage)
+    //            userreponsethumbimageData = NSData(contentsOfURL: filemainurl)!
+    //            print(userreponsethumbimageData.length)
+    //            print(uiImage)
+    //            // imageData = UIImageJPEGRepresentation(uiImage, 0.1)
+    //        }
+    //        catch let error as NSError
+    //        {
+    //            print(error)
+    //            return
+    //        }
+    //
+    //        SVProgressHUD.showWithMaskType(SVProgressHUDMaskType.Clear)
+    //        let VideoFilePath = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("mergeVideo\(arc4random()%1000)d")!.URLByAppendingPathExtension("mp4")!.absoluteString
+    //
+    //        if NSFileManager.defaultManager().fileExistsAtPath(VideoFilePath!)
+    //
+    //        {
+    //            do
+    //
+    //            {
+    //                try NSFileManager.defaultManager().removeItemAtPath(VideoFilePath!)
+    //            }
+    //            catch { }
+    //
+    //        }
+    //        let tempfilemainurl =  NSURL(string: VideoFilePath!)!
+    //        let sourceAsset = AVURLAsset(URL: filemainurl!, options: nil)
+    //        let assetExport: AVAssetExportSession = AVAssetExportSession(asset: sourceAsset, presetName: AVAssetExportPresetMediumQuality)!
+    //        assetExport.outputFileType = AVFileTypeQuickTimeMovie
+    //        assetExport.outputURL = tempfilemainurl
+    //        assetExport.exportAsynchronouslyWithCompletionHandler { () -> Void in
+    //            switch assetExport.status
+    //            {
+    //            case AVAssetExportSessionStatus.Completed:
+    //                dispatch_async(dispatch_get_main_queue(),
+    //                               {
+    //                                do
+    //                                {
+    //                                    SVProgressHUD .dismiss()
+    //                                    self.userreponsevideoData = try NSData(contentsOfURL: tempfilemainurl, options: NSDataReadingOptions())
+    //                                    print("MB - \(self.userreponsevideoData.length) byte")
+    //
+    //
+    //                                }
+    //                                catch
+    //                                {
+    //                                    SVProgressHUD .dismiss()
+    //                                    print(error)
+    //                                }
+    //                })
+    //            case  AVAssetExportSessionStatus.Failed:
+    //                print("failed \(assetExport.error)")
+    //            case AVAssetExportSessionStatus.Cancelled:
+    //                print("cancelled \(assetExport.error)")
+    //            default:
+    //                print("complete")
+    //                SVProgressHUD .dismiss()
+    //            }
+    //
+    //        }
+    //    }
+    
 }
 
 

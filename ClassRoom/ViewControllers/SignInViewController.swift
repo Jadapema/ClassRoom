@@ -7,21 +7,26 @@
 //
 
 import UIKit
-import FirebaseAuth
-import FirebaseDatabase
-import FirebaseStorage
+//import FirebaseAuth
+//import FirebaseDatabase
+//import FirebaseStorage
 
 class SignInViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate, UITextFieldDelegate {
-    //Outlets
+                                                //Outlets
     @IBOutlet var name: UITextField!
     @IBOutlet var email: UITextField!
     @IBOutlet var password: UITextField!
     @IBOutlet var ProfileImage: UIImageView!
-    //Variables
+    
+                                                //Variables
+    
+    
+    var Firebase = FirebaseController()
+    
     var ProfileImageUrl : String?
-    var mainRef : FIRDatabaseReference {
-        return FIRDatabase.database().reference()
-    }
+//    var mainRef : FIRDatabaseReference {
+//        return FIRDatabase.database().reference()
+//    }
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -40,52 +45,60 @@ class SignInViewController: UIViewController, UIImagePickerControllerDelegate,UI
                                                 // IBActions
     //Button "Registrarse" Action
     @IBAction func SignIn(_ sender: UIButton) {
-        //Create User in Database
-        FIRAuth.auth()?.createUser(withEmail: email.text!, password: password.text!, completion: { (user, error) in
-            //Check if the user exist
-            if user != nil {
-                //User created Sucessfully
-                print("User Created Sucessfully")
-                //Reference to Profile
-                let profileRef = self.mainRef.child("Users").child((user?.uid)!).child("Profile")
-                //Add Name and Email here, then the profileImage is uploaded
-                profileRef.child("Name").setValue("\(self.name.text!)")
-                profileRef.child("Email").setValue("\(self.email.text!)")
-                //Reference to Storage
-                let StorageRef = FIRStorage.storage().reference(forURL: "gs://classroom-19991.appspot.com/").child("Users_Profile_Image").child("\(self.randomAlphaNumericString(length: 10)).jpg")
-                //We create a PNG Representation of the image to upload
-                if let image = self.ProfileImage.image, let UploadData = UIImageJPEGRepresentation(image, 0.1) {
-                    //Upload the image to the storage
-                    StorageRef.put(UploadData, metadata: nil, completion: { (Metadata, error) in
-                        if error != nil {
-                            print(error!)
-                        } else {
-                                //Image Uploaded
-                            //Get the download url of the image uploaded
-                            if let ImageUploadedUrl = Metadata?.downloadURL()?.absoluteString {
-                                //once the image is uploaded we upload the data again but with the imageUrl
-                                let profileRef = self.mainRef.child("Users").child((user?.uid)!).child("Profile")
-                                profileRef.child("Name").setValue("\(self.name.text!)")
-                                profileRef.child("Email").setValue("\(self.email.text!)")
-                                profileRef.child("ProfileImageUrl").setValue("\(ImageUploadedUrl)")
-                            }
-                        }
-                    })
-                }
-                //Present LogInVC
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let LogInViewController = storyboard.instantiateViewController(withIdentifier: "LogIn")
-                self.present(LogInViewController, animated: true, completion: nil)
-            } else {
-                if let myError = error?.localizedDescription {
-                    print(myError)
-                } else {
-                    print("Error")
-                }
-            }
-        })
+//        FIRAuth.auth()?.createUser(withEmail: email.text!, password: password.text!, completion: { (user, error) in
+//            //Check if the user exist
+//            if user != nil {
+//                //User created Sucessfully
+//                print("User Created Sucessfully")
+//                //Reference to Profile
+//                let profileRef = self.mainRef.child("Users").child((user?.uid)!).child("Profile")
+//                //Add Name and Email here, then the profileImage is uploaded
+//                profileRef.child("Name").setValue("\(self.name.text!)")
+//                profileRef.child("Email").setValue("\(self.email.text!)")
+//                //Reference to Storage
+//                let StorageRef = FIRStorage.storage().reference(forURL: "gs://classroom-19991.appspot.com/").child("Users_Profile_Image").child("\(self.randomAlphaNumericString(length: 10)).jpg")
+//                //We create a PNG Representation of the image to upload
+//                if let image = self.ProfileImage.image, let UploadData = UIImageJPEGRepresentation(image, 0.1) {
+//                    //Upload the image to the storage
+//                    StorageRef.put(UploadData, metadata: nil, completion: { (Metadata, error) in
+//                        if error != nil {
+//                            print(error!)
+//                        } else {
+//                                //Image Uploaded
+//                            //Get the download url of the image uploaded
+//                            if let ImageUploadedUrl = Metadata?.downloadURL()?.absoluteString {
+//                                //once the image is uploaded we upload the data again but with the imageUrl
+//                                let profileRef = self.mainRef.child("Users").child((user?.uid)!).child("Profile")
+//                                profileRef.child("Name").setValue("\(self.name.text!)")
+//                                profileRef.child("Email").setValue("\(self.email.text!)")
+//                                profileRef.child("ProfileImageUrl").setValue("\(ImageUploadedUrl)")
+//                            }
+//                        }
+//                    })
+//                }
+//                //Present LogInVC
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let LogInViewController = storyboard.instantiateViewController(withIdentifier: "LogIn")
+//                self.present(LogInViewController, animated: true, completion: nil)
+//            } else {
+//                if let myError = error?.localizedDescription {
+//                    print(myError)
+//                } else {
+//                    print("Error")
+//                }
+//            }
+//        })
+        // Create a user
+        Firebase.Signin(name: self.name.text!, email: self.email.text!, password: self.password.text!, profileImg: self.ProfileImage.image!) {
+            // User created successfully
+            //Present LogInVC
+            print("present storyboard")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let LogInViewController = storyboard.instantiateViewController(withIdentifier: "LogIn")
+            self.present(LogInViewController, animated: true, completion: nil)
+        }
     }
-    //Button "Inicial Sesion Con Facebook" Action
+    //Button "Iniciar Sesion Con Facebook" Action
     @IBAction func SignInFacebook(_ sender: UIButton) {
     }
     
@@ -121,19 +134,7 @@ class SignInViewController: UIViewController, UIImagePickerControllerDelegate,UI
         picker.allowsEditing = true
         present(picker, animated: true, completion: nil)
     }
-    //Return a random Alphanumeric Number With a length
-    func randomAlphaNumericString(length: Int) -> String {
-        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let allowedCharsCount = UInt32(allowedChars.characters.count)
-        var randomString = ""
-        for _ in 0..<length {
-            let randomNum = Int(arc4random_uniform(allowedCharsCount))
-            let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
-            let newCharacter = allowedChars[randomIndex]
-            randomString += String(newCharacter)
-        }
-        return randomString
-    }
+   
     //Hide Keyboard when user touches outside keyboard
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)

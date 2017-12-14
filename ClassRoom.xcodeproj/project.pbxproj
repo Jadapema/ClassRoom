@@ -50,6 +50,7 @@
 		FE7BC1321F6393AC00B7C183 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7BC1311F6393AC00B7C183 /* PreviewViewController.swift */; };
 		FE7BC1341F63AD8900B7C183 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE7BC1331F63AD8900B7C183 /* MobileCoreServices.framework */; };
 		FEA6B3071F6647D3009EA4A8 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6B3061F6647D3009EA4A8 /* MainTabViewController.swift */; };
+		FED65AC11FE189AF000BC2E6 /* Controllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED65AC01FE189AF000BC2E6 /* Controllers.swift */; };
 		FEDB76EA1F679D9E00FDDED9 /* PRTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDB76E91F679D9E00FDDED9 /* PRTableViewCell.swift */; };
 		FEDB76EC1F679DB400FDDED9 /* PRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDB76EB1F679DB400FDDED9 /* PRViewController.swift */; };
 		FEDE09631F64F86900F30D75 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDE09621F64F86900F30D75 /* MessageViewController.swift */; };
@@ -118,6 +119,7 @@
 		FE7BC1311F6393AC00B7C183 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		FE7BC1331F63AD8900B7C183 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		FEA6B3061F6647D3009EA4A8 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
+		FED65AC01FE189AF000BC2E6 /* Controllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controllers.swift; sourceTree = "<group>"; };
 		FEDB76E91F679D9E00FDDED9 /* PRTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRTableViewCell.swift; sourceTree = "<group>"; };
 		FEDB76EB1F679DB400FDDED9 /* PRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRViewController.swift; sourceTree = "<group>"; };
 		FEDE09621F64F86900F30D75 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				FE37E8B61F67AA4600F76A3B /* PRAViewController.swift */,
 				FEFC81CC1FB3551D00000B50 /* UploadBookViewController.swift */,
 				FE0642421FDF1B4E00EE5D6E /* Models.swift */,
+				FED65AC01FE189AF000BC2E6 /* Controllers.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				FEFB0F811F9ECE8600508438 /* DetailBookViewController.swift in Sources */,
 				FE3041E11F5BEF3D00F34EC0 /* SubjectDetailViewController.swift in Sources */,
 				FE7BC1301F635F7300B7C183 /* AddNoteViewController.swift in Sources */,
+				FED65AC11FE189AF000BC2E6 /* Controllers.swift in Sources */,
 				FE353C351F9E637F00DAED20 /* BooksCategoryTableViewCell.swift in Sources */,
 				FEEC88141F5E6C4A00C4C0F5 /* SubjectDetail_AddMemberViewController.swift in Sources */,
 				FE2CB1A91F9D6E05000E6B19 /* BooksCollectionViewCell.swift in Sources */,
