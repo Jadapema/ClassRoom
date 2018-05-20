@@ -5,6 +5,7 @@
 //  Created by Jacob Peralta on 16/8/17.
 //  Copyright © 2017 Jadapema. All rights reserved.
 //
+//class
 
 import UIKit
 
